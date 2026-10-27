@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>CTC-021 Simulator</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <div class="brand">
+    <div class="maker">WirelessBilly, LLC</div>
+    <div class="title">CTC-021 <span>Simulator</span></div>
+  </div>
+  <div class="clock" id="clock">--:--:--</div>
+  <div class="badge" id="mode">MANUAL</div>
+  <div class="line" id="line">Code line idle</div>
+  <div class="spacer"></div>
+  <div class="speed" id="speed" role="group" aria-label="Simulation speed">
+    <button data-s="1">1&times;</button><button data-s="2">2&times;</button><button data-s="5">5&times;</button><button data-s="10">10&times;</button><button data-s="30">30&times;</button>
+  </div>
+  <button id="pause">Pause</button>
+  <button id="sound">Sound off</button>
+</header>
+
+<main>
+  <details class="guide" id="guide" open>
+    <summary>Quick start <small>This is a working demo of the simulation planned for your CTC-021. It runs entirely in your browser.</small></summary>
+    <div class="guide-body">
+      <div>
+        <h3>Watch it run itself</h3>
+        <p>Turn <b>Line Power Transfer</b> (bottom right of the panel) to <b>2</b>. The computer dispatcher takes over: trains enter, routes are lined and meets happen at the sidings. Use <b>10&times;</b> or <b>30&times;</b> at the top to speed things up.</p>
+      </div>
+      <div>
+        <h3>Dispatch it yourself</h3>
+        <p>Turn Line Power Transfer to <b>1</b>. Click a lever plate's left or right side to move a switch or signal lever, then press that column's <b>code button</b>. The lamps only change once the field answers back over the code line, about 5 to 10 seconds later.</p>
+      </div>
+      <div>
+        <h3>Things to try</h3>
+        <p>Line a train into a siding for a meet. Cancel a signal in front of a train and the red lamp flashes for two minutes of time locking. Flip a model board toggle to fail a track circuit, or use <b>Instructor</b> below to enter trains.</p>
+      </div>
+    </div>
+  </details>
+
+  <section class="panel-wrap">
+    <svg id="panel" viewBox="0 0 1840 1010" preserveAspectRatio="xMidYMid meet" role="img" aria-label="CTC-021 control panel"></svg>
+  </section>
+
+  <section class="overview-wrap">
+    <h2>Field overview <small>where the trains really are (not shown on the real panel)</small></h2>
+    <svg id="overview" viewBox="0 0 1800 240" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Track overview with train positions"></svg>
+  </section>
+
+  <section class="info">
+    <div class="card trains">
+      <h2>Trains <small id="stats"></small></h2>
+      <div class="scroll-x">
+        <table>
+          <thead><tr><th>Train</th><th>Type</th><th>Dir</th><th>MPH</th><th>Length</th><th>Location</th><th>Status</th></tr></thead>
+          <tbody id="trainRows"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="card controls">
+      <h2>Instructor</h2>
+      <div class="row">
+        <label for="spawnType">Train type</label>
+        <select id="spawnType">
+          <option value="any">Any</option>
+        </select>
+        <button id="spawnE">Enter eastbound</button>
+        <button id="spawnW">Enter westbound</button>
+      </div>
+      <div class="row">
+        <label><input type="checkbox" id="autoSpawn"> Trains enter automatically</label>
+        <label for="maxTrains">Max trains</label>
+        <select id="maxTrains"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select>
+      </div>
+      <div class="row">
+        <button id="lampTest">Lamp test</button>
+        <button id="clearTrains">Remove trains</button>
+        <button id="resetSim" class="danger">Reset simulation</button>
+      </div>
+      <p class="hint">More than 3 trains can deadlock the automatic dispatcher: each station only has one siding.</p>
+    </div>
+
+    <div class="card log">
+      <h2>Train sheet &amp; events <label class="inline"><input type="checkbox" id="showField" checked> field</label></h2>
+      <ol id="events"></ol>
+    </div>
+  </section>
+
+  <footer>&copy; 2026 WirelessBilly, LLC &middot; CTC-021 simulation demo &middot; The same program will run on the panel's controller.</footer>
+</main>
+
+<script src="ctc.js"></script>
+<script src="panel.js"></script>
+</body>
+</html>
